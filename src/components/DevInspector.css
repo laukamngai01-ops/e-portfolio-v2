@@ -1,0 +1,287 @@
+/* ============================================
+   DEV INSPECTOR — Click-to-Edit Overlay
+   ============================================ */
+
+/* ── Toggle Button ─────────────────────────── */
+.dev-inspector__toggle-wrap {
+  position: fixed !important;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.6rem;
+  pointer-events: all;
+}
+
+.dev-inspector__toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem 0.6rem 0.75rem;
+  border-radius: 9999px;
+  background: rgba(10, 10, 20, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+  transition:
+    background 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease,
+    transform 200ms ease,
+    box-shadow 200ms ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+}
+.dev-inspector__toggle:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.95);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+.dev-inspector__toggle:active { transform: scale(0.97); }
+
+.dev-inspector__toggle--active {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.5);
+  color: #a78bfa;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.25), 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.dev-inspector__toggle-icon {
+  font-size: 0.9rem;
+  line-height: 1;
+  width: 1.4rem;
+  text-align: center;
+}
+
+.dev-inspector__toggle-label {
+  font-size: 0.8rem;
+}
+
+.dev-inspector__kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.65rem;
+  font-family: monospace;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0;
+}
+
+.dev-inspector__hint {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.72rem;
+  color: rgba(167, 139, 250, 0.8);
+  text-align: right;
+  padding: 0 0.5rem;
+  animation: fadeInHint 0.3s ease both;
+}
+@keyframes fadeInHint {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Active overlay (pointer-events: none) ── */
+.dev-inspector__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  outline: 2px dashed rgba(99, 102, 241, 0.25);
+  outline-offset: -2px;
+}
+
+/* ── Cursor label ── */
+.dev-inspector__cursor-tag {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  bottom: 5.5rem;
+  right: 2rem;
+  max-width: 280px;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  background: rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  backdrop-filter: blur(8px);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #c4b5fd;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: fadeInHint 0.15s ease both;
+}
+
+/* ── Dialog ── */
+.dev-inspector__dialog {
+  position: fixed;
+  z-index: 9999;
+  width: 380px;
+  max-width: calc(100vw - 2rem);
+  background: rgba(8, 8, 20, 0.95);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 24px 64px rgba(0, 0, 0, 0.6),
+    0 0 48px rgba(99, 102, 241, 0.12);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  animation: dialogEnter 0.25s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+@keyframes dialogEnter {
+  from { opacity: 0; transform: scale(0.93) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.dev-inspector__dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.dev-inspector__dialog-label-small {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(167, 139, 250, 0.7);
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.dev-inspector__dialog-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.35;
+}
+
+.dev-inspector__close {
+  flex-shrink: 0;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 150ms ease, color 150ms ease;
+}
+.dev-inspector__close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.dev-inspector__dialog-instruction {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+}
+
+.dev-inspector__textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 0.75rem 0.9rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  resize: vertical;
+  min-height: 90px;
+  outline: none;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+.dev-inspector__textarea:focus {
+  border-color: rgba(99, 102, 241, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+}
+.dev-inspector__textarea::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 0.8rem;
+}
+
+.dev-inspector__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.dev-inspector__copy-btn {
+  flex: 1;
+  padding: 0.65rem 1rem;
+  border-radius: 9999px;
+  background: #6366f1;
+  border: none;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+  transition: background 150ms ease, transform 100ms ease, opacity 150ms ease;
+  white-space: nowrap;
+}
+.dev-inspector__copy-btn:hover:not(:disabled) { background: #4f46e5; }
+.dev-inspector__copy-btn:active:not(:disabled) { transform: scale(0.97); }
+.dev-inspector__copy-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.dev-inspector__copy-btn--copied {
+  background: #16a34a !important;
+}
+
+.dev-inspector__cancel-btn {
+  padding: 0.65rem 1rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  transition: background 150ms ease, color 150ms ease;
+  white-space: nowrap;
+}
+.dev-inspector__cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.dev-inspector__dialog-tip {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.25);
+  line-height: 1.5;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
