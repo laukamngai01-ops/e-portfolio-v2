@@ -11,7 +11,7 @@ import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import crypto from 'node:crypto'
 
-const DEPLOY_DIR = path.resolve('..', 'deploy')
+const DEPLOY_DIR = path.resolve('dist')
 
 async function getAllFiles(dir) {
   const results = []

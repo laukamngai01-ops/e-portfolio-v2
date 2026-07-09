@@ -19,7 +19,7 @@ async function enablePages() {
     headers,
     body: JSON.stringify({
       source: {
-        branch: 'main',
+        branch: 'gh-pages',
         path: '/'
       }
     })

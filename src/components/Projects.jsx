@@ -1,58 +1,11 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, useMotionValue, useSpring, useMotionTemplate } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import { ArrowUpRight } from 'lucide-react'
 import FadeIn from './ui/FadeIn'
 import LiveProjectButton from './ui/LiveProjectButton'
-
-const PROJECTS_DATA = [
-  {
-    num: '01',
-    category: 'Client',
-    name: 'AI Film',
-    brief: 'Create an engaging sci-fi narrative short blending traditional cinematography with generative AI pipelines.',
-    role: 'Director & AI Filmmaker',
-    tools: 'Midjourney, Seedance2.0, google Omni, Capcut.',
-    workflow: 'Concept -> Prompting -> AI Gen -> Editing -> Color Grading',
-    items: [
-      { type: 'video', src: '/assets/portfolio/ai_film_v2_1.mp4', poster: '/assets/portfolio/ai_film_v2_1_poster.jpg' },
-      { type: 'video', src: '/assets/portfolio/ai_film_v2_2.mp4', poster: '/assets/portfolio/ai_film_v2_2_poster.jpg' },
-      { type: 'video', src: '/assets/portfolio/ai_film_v2_3.mp4', poster: '/assets/portfolio/ai_film_v2_3_poster.jpg' },
-      { type: 'video', src: '/assets/portfolio/ai_film_v2_4.mp4', poster: '/assets/portfolio/ai_film_v2_4_poster.jpg' },
-      { type: 'video', src: '/assets/portfolio/ai_film_v2_5.mp4', poster: '/assets/portfolio/ai_film_v2_5_poster.jpg' }
-    ]
-  },
-  {
-    num: '02',
-    category: 'Personal',
-    name: 'Graphic Design',
-    brief: 'Design a cohesive brand identity and high-impact visual assets for a digital-first agency.',
-    role: 'Multimedia Designer',
-    tools: 'Illustrator, Photoshop, Indesign, Nano Banana 2.',
-    workflow: 'Research -> Moodboard -> Drafting -> Revisions -> Final Assets',
-    items: [
-      { type: 'image', src: '/assets/portfolio/graphic_v2_1.webp' },
-      { type: 'image', src: '/assets/portfolio/graphic_v2_2.webp' },
-      { type: 'image', src: '/assets/portfolio/graphic_v2_3.webp' },
-      { type: 'image', src: '/assets/portfolio/graphic_v2_4.webp' },
-      { type: 'image', src: '/assets/portfolio/graphic_v2_5.webp' },
-      { type: 'image', src: '/assets/portfolio/graphic_v2_6.webp' }
-    ]
-  },
-  {
-    num: '03',
-    category: 'Client',
-    name: 'Photography & Videography',
-    brief: 'Produce a high-end commercial video highlighting spatial design and architectural details.',
-    role: 'Photography & Video Editting',
-    tools: 'CAPCUT, Sony, Nikon, DJI poket 2.',
-    workflow: 'Storyboarding -> On-Site Shoot -> Editing -> Color Grading',
-    items: [
-      { type: 'video', src: '/assets/portfolio/photo_v2_1.mp4', poster: '/assets/portfolio/photo_v2_1_poster.jpg' },
-      { type: 'video', src: '/assets/portfolio/photo_v2_2.mp4', poster: '/assets/portfolio/photo_v2_2_poster.jpg' },
-      { type: 'video', src: '/assets/portfolio/photo_v2_3.mp4', poster: '/assets/portfolio/photo_v2_3_poster.jpg' },
-      { type: 'video', src: '/assets/portfolio/photo_v2_4.mp4', poster: '/assets/portfolio/photo_v2_4_poster.jpg' }
-    ]
-  }
-]
+import { PROJECTS_DATA } from '../data/projects'
+import { useDwellTimer } from '../hooks/useDwellTimer'
 
 const getAssetUrl = (path) => {
   if (!path) return ''
@@ -60,7 +13,7 @@ const getAssetUrl = (path) => {
   return `${import.meta.env.BASE_URL}${cleanPath}`
 }
 
-const MediaCarousel = ({ items }) => {
+const MediaCarousel = ({ items, projectId }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef(null);
   const currentIndexRef = useRef(currentIndex);
@@ -107,7 +60,6 @@ const MediaCarousel = ({ items }) => {
     };
   }, [items.length]);
 
-  // Mobile: touch swipe support
   const handleTouchStart = (e) => {
     touchStartRef.current = e.touches[0].clientX;
   };
@@ -131,7 +83,7 @@ const MediaCarousel = ({ items }) => {
   return (
     <div 
       ref={containerRef} 
-      className="relative w-full h-full flex items-center justify-center overflow-hidden bg-black/20 rounded-[32px] sm:rounded-[40px] shadow-2xl ring-1 ring-white/10 cursor-ew-resize"
+      className="relative w-full h-full min-h-[300px] flex items-center justify-center overflow-hidden bg-black/20 rounded-[20px] sm:rounded-[32px] md:rounded-[40px] shadow-2xl ring-1 ring-white/10 cursor-ew-resize"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
@@ -150,7 +102,8 @@ const MediaCarousel = ({ items }) => {
         return (
           <motion.div
             key={index}
-            className="absolute w-[80%] h-[90%] sm:w-[75%] rounded-[24px] sm:rounded-[32px] overflow-hidden shadow-2xl bg-black/50"
+            // Use aspect-video to strictly enforce 16:9 scaling
+            className="absolute w-[95%] sm:w-[90%] md:w-[85%] aspect-video rounded-[16px] sm:rounded-[24px] overflow-hidden shadow-2xl bg-black/50"
             initial={false}
             animate={{
               x: `${translateX}%`,
@@ -164,34 +117,66 @@ const MediaCarousel = ({ items }) => {
               damping: 25
             }}
           >
-            {item.type === 'video' ? (
-              <video 
-                src={isActive || Math.abs(offset) <= 1 ? getAssetUrl(item.src) : undefined}
-                poster={getAssetUrl(item.poster)}
-                autoPlay={isActive}
-                loop
-                muted
-                playsInline
-                preload={isActive ? 'auto' : 'none'}
-                className="w-full h-full object-cover"
-              />
+            {isActive ? (
+              <Link to={`/project/${projectId}`} className="block w-full h-full cursor-pointer group/link">
+                {item.type === 'video' ? (
+                  <video 
+                    src={getAssetUrl(item.src)}
+                    poster={getAssetUrl(item.poster)}
+                    autoPlay={true}
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                    className="w-full h-full object-contain"
+                  />
+                ) : (
+                  <img 
+                    src={getAssetUrl(item.src)} 
+                    className="w-full h-full object-contain"
+                    alt=""
+                    loading="lazy"
+                  />
+                )}
+                {/* Hover UI inside the link */}
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/link:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center backdrop-blur-sm z-20">
+                  <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center border border-white/20 transform translate-y-4 group-hover/link:translate-y-0 transition-all duration-500">
+                    <ArrowUpRight className="w-6 h-6 text-white" />
+                  </div>
+                  <span className="mt-4 font-sans text-xs tracking-widest uppercase text-white transform translate-y-4 group-hover/link:translate-y-0 transition-all duration-500 delay-75">
+                    View Case Study
+                  </span>
+                </div>
+              </Link>
             ) : (
-              <img 
-                src={getAssetUrl(item.src)} 
-                className="w-full h-full object-cover"
-                alt=""
-                loading="lazy"
-                decoding="async"
-              />
+              <>
+                {item.type === 'video' ? (
+                  <video 
+                    src={Math.abs(offset) <= 1 ? getAssetUrl(item.src) : undefined}
+                    poster={getAssetUrl(item.poster)}
+                    loop
+                    muted
+                    playsInline
+                    preload="none"
+                    className="w-full h-full object-contain"
+                  />
+                ) : (
+                  <img 
+                    src={getAssetUrl(item.src)} 
+                    className="w-full h-full object-contain"
+                    alt=""
+                    loading="lazy"
+                  />
+                )}
+                {/* Dark overlay for inactive items */}
+                <motion.div 
+                  className="absolute inset-0 bg-[#050505] pointer-events-none"
+                  initial={false}
+                  animate={{ opacity: 0.6 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </>
             )}
-            
-            {/* Dark overlay for inactive items */}
-            <motion.div 
-              className="absolute inset-0 bg-[#050505] pointer-events-none"
-              initial={false}
-              animate={{ opacity: isActive ? 0 : 0.6 }}
-              transition={{ duration: 0.3 }}
-            />
           </motion.div>
         )
       })}
@@ -214,6 +199,9 @@ const MediaCarousel = ({ items }) => {
 const Card = ({ project, i, progress, range, targetScale }) => {
   const containerRef = useRef(null)
   const cardRef = useRef(null)
+  
+  // Track dwell time for this specific project card
+  useDwellTimer(`ProjectCard_${project.id}`, containerRef)
   
   const scale = useTransform(progress, range, [1, targetScale])
   
@@ -238,16 +226,17 @@ const Card = ({ project, i, progress, range, targetScale }) => {
   const edgeGlowMask = useMotionTemplate`radial-gradient(500px circle at ${smoothX}px ${smoothY}px, white, transparent 100%)`
 
   return (
-    <div ref={containerRef} className="h-screen flex items-center justify-center sticky top-0">
+    <div ref={containerRef} className="md:h-screen flex items-center justify-center md:sticky top-0 mb-12 md:mb-0">
       <motion.div 
         ref={cardRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{ scale, top: `calc(-5vh + ${i * 28}px)` }}
-        className="group flex flex-col relative w-[90vw] max-w-6xl h-[85vh] rounded-[40px] sm:rounded-[50px] md:rounded-[60px] liquid-glass p-6 sm:p-8 md:p-12 transform-origin-top overflow-hidden shadow-2xl"
+        // Removed fixed h-[85vh], allowing flex-col to dictate height naturally up to max-h-[90vh]
+        className="group flex flex-col relative w-[95vw] md:w-[95vw] max-w-7xl max-h-none md:max-h-[90vh] h-auto rounded-[32px] sm:rounded-[40px] md:rounded-[50px] liquid-glass p-4 sm:p-8 md:p-10 transform-origin-top shadow-2xl overflow-hidden"
       >
         {/* Massive Watermark Number */}
-        <div className="absolute -top-10 -left-6 text-[150px] sm:text-[200px] md:text-[280px] font-display font-bold text-white/[0.02] pointer-events-none select-none z-0 tracking-tighter leading-none transition-transform duration-1000 group-hover:scale-105 group-hover:text-white/[0.04]">
+        <div className="absolute -top-10 -left-6 text-[150px] sm:text-[200px] md:text-[240px] font-display font-bold text-white/[0.02] pointer-events-none select-none z-0 tracking-tighter leading-none transition-transform duration-1000 group-hover:scale-105 group-hover:text-white/[0.04]">
           {project.num}
         </div>
 
@@ -271,10 +260,10 @@ const Card = ({ project, i, progress, range, targetScale }) => {
         />
 
         {/* Main Content Layout */}
-        <div className="relative z-30 flex flex-col lg:flex-row w-full h-full gap-5 sm:gap-6 lg:gap-8 overflow-hidden">
+        <div className="relative z-30 flex flex-col lg:flex-row w-full h-full gap-5 sm:gap-6 lg:gap-8 pointer-events-none">
           
-          {/* Left Column (or Top on Mobile): Info & Details */}
-          <div className="flex flex-col w-full lg:w-[40%] xl:w-[35%] shrink-0 flex-none lg:h-full z-40">
+          {/* Left Column: Info & Details */}
+          <div className="flex flex-col w-full lg:w-[35%] shrink-0 flex-none z-40 pointer-events-auto mt-4 lg:mt-0">
             {/* Title & Tags */}
             <div className="flex flex-col gap-3 sm:gap-4">
               <div className="flex items-center gap-3 sm:gap-4">
@@ -285,19 +274,19 @@ const Card = ({ project, i, progress, range, targetScale }) => {
                   {project.category}
                 </span>
                 <div className="ml-auto lg:hidden">
-                  <LiveProjectButton />
+                  <LiveProjectButton projectId={project.id} />
                 </div>
               </div>
               <h3 className="font-display text-white/90 uppercase text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[0.9] tracking-tight mt-1 drop-shadow-lg transition-all duration-700 ease-out line-clamp-2">
                 {project.name}
               </h3>
               <div className="hidden lg:block mt-2">
-                <LiveProjectButton className="interactive" />
+                <LiveProjectButton className="interactive" projectId={project.id} />
               </div>
             </div>
 
             {/* Project Details Panel */}
-            <div className="mt-4 lg:mt-auto flex flex-col gap-2.5 sm:gap-3 text-xs sm:text-sm font-sans text-white/80 bg-black/40 p-4 sm:p-5 md:p-6 rounded-[20px] sm:rounded-[24px] border border-white/10 backdrop-blur-md shadow-inner overflow-y-auto max-h-[28vh] lg:max-h-[50vh] scrollbar-hide pointer-events-auto">
+            <div className="mt-4 lg:mt-8 flex flex-col gap-2.5 sm:gap-3 text-xs sm:text-sm font-sans text-white/80 bg-black/40 p-4 sm:p-5 md:p-6 rounded-[20px] sm:rounded-[24px] border border-white/10 backdrop-blur-md shadow-inner overflow-y-auto scrollbar-hide pointer-events-auto">
                <div className="grid grid-cols-2 gap-4">
                  <div><span className="text-sci-teal uppercase text-[9px] sm:text-[10px] tracking-widest block mb-0.5 sm:mb-1">Role</span> <span className="font-light">{project.role}</span></div>
                  <div><span className="text-sci-teal uppercase text-[9px] sm:text-[10px] tracking-widest block mb-0.5 sm:mb-1">Tools</span> <span className="font-light">{project.tools}</span></div>
@@ -308,9 +297,9 @@ const Card = ({ project, i, progress, range, targetScale }) => {
             </div>
           </div>
 
-          {/* Right Column (or Bottom on Mobile): Carousel */}
-          <div className="relative z-30 flex-1 flex w-full h-full min-h-[30vh] lg:min-h-0 overflow-hidden pointer-events-auto">
-            <MediaCarousel items={project.items} />
+          {/* Right Column: Carousel - Using aspect-video wrapper */}
+          <div className="relative z-30 flex-1 flex w-full aspect-[4/3] lg:aspect-video overflow-hidden pointer-events-auto">
+            <MediaCarousel items={project.items} projectId={project.id} />
           </div>
 
         </div>

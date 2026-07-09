@@ -44,6 +44,7 @@ export default function Process() {
       id="process" 
       ref={containerRef}
       className="w-full bg-[#050505] px-5 sm:px-8 md:px-12 py-24 sm:py-32 relative z-20 border-t border-white/5"
+      data-inspector-label="Process Section"
     >
       <div className="max-w-7xl mx-auto">
         <FadeIn delay={0} y={40} className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-6">
