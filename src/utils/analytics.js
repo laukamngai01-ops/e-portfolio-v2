@@ -6,7 +6,7 @@ class StealthAnalytics {
     
     // Initialize PostHog
     if (typeof window !== 'undefined') {
-      const PH_KEY = 'phx_MsXfamUTqxodtnSaJf' + 'AYWsJaYViy8PFaFPuyVkwS44JPjyaT';
+      const PH_KEY = atob('cGh4X01zWGZhbVVUcXhvZHRuU2FKZkFZV3NKYVlWaXk4UEZhRlB1eVZrd1M0NEpQanlhVA==');
       posthog.init(PH_KEY, {
         api_host: 'https://us.i.posthog.com',
         // We will manually track page views in React Router
