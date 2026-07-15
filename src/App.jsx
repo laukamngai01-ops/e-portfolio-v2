@@ -9,7 +9,7 @@ function App() {
   useTracker(); // Stealth Analytics
   return (
     <>
-      <DevInspector />
+      {import.meta.env.DEV && <DevInspector />}
       <Navbar />
       <main id="main-content" className="bg-[#050505] min-h-screen font-sans text-muted-cyan selection:bg-sci-teal/40">
         <Routes>
