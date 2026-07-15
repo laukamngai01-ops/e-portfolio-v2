@@ -96,14 +96,14 @@ const MediaCarousel = ({ items, projectId }) => {
  
         const scale = isActive ? 1 : 0.8;
         const opacity = isActive ? 1 : 0.3;
-        const translateX = offset * 80; 
+        const translateX = offset * 92; 
         const zIndex = 10 - Math.abs(offset);
 
         return (
           <motion.div
             key={index}
-            // Use aspect-video to strictly enforce 16:9 scaling
-            className="absolute w-[95%] sm:w-[90%] md:w-[85%] aspect-video rounded-[16px] sm:rounded-[24px] overflow-hidden shadow-2xl bg-black/50"
+            // Use responsive aspect ratio to display vertical content beautifully on mobile
+            className="absolute w-[95%] sm:w-[90%] md:w-[96%] aspect-[4/5] sm:aspect-[4/3] md:aspect-video rounded-[16px] sm:rounded-[24px] overflow-hidden shadow-2xl bg-black/50"
             initial={false}
             animate={{
               x: `${translateX}%`,
@@ -226,14 +226,14 @@ const Card = ({ project, i, progress, range, targetScale }) => {
   const edgeGlowMask = useMotionTemplate`radial-gradient(500px circle at ${smoothX}px ${smoothY}px, white, transparent 100%)`
 
   return (
-    <div ref={containerRef} className="md:h-screen flex items-center justify-center md:sticky top-0 mb-12 md:mb-0">
+    <div ref={containerRef} className="md:h-[82vh] flex items-center justify-center md:sticky top-0 mb-12 md:mb-0">
       <motion.div 
         ref={cardRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        style={{ scale, top: `calc(-5vh + ${i * 28}px)` }}
+        style={{ scale, top: `calc(-3vh + ${i * 20}px)` }}
         // Removed fixed h-[85vh], allowing flex-col to dictate height naturally up to max-h-[90vh]
-        className="group flex flex-col relative w-[95vw] md:w-[95vw] max-w-7xl max-h-none md:max-h-[90vh] h-auto rounded-[32px] sm:rounded-[40px] md:rounded-[50px] liquid-glass p-4 sm:p-8 md:p-10 transform-origin-top shadow-2xl overflow-hidden"
+        className="group flex flex-col relative w-[95vw] md:w-[95vw] max-w-[1600px] max-h-none md:max-h-[90vh] h-auto rounded-[32px] sm:rounded-[40px] md:rounded-[50px] liquid-glass p-4 sm:p-8 md:p-10 transform-origin-top shadow-2xl overflow-hidden"
       >
         {/* Massive Watermark Number */}
         <div className="absolute -top-10 -left-6 text-[150px] sm:text-[200px] md:text-[240px] font-display font-bold text-white/[0.02] pointer-events-none select-none z-0 tracking-tighter leading-none transition-transform duration-1000 group-hover:scale-105 group-hover:text-white/[0.04]">
@@ -263,7 +263,7 @@ const Card = ({ project, i, progress, range, targetScale }) => {
         <div className="relative z-30 flex flex-col lg:flex-row w-full h-full gap-5 sm:gap-6 lg:gap-8 pointer-events-none">
           
           {/* Left Column: Info & Details */}
-          <div className="flex flex-col w-full lg:w-[35%] shrink-0 flex-none z-40 pointer-events-auto mt-4 lg:mt-0">
+          <div className="flex flex-col w-full lg:w-[22%] shrink-0 flex-none z-40 pointer-events-auto mt-4 lg:mt-0">
             {/* Title & Tags */}
             <div className="flex flex-col gap-3 sm:gap-4">
               <div className="flex items-center gap-3 sm:gap-4">
@@ -285,8 +285,8 @@ const Card = ({ project, i, progress, range, targetScale }) => {
               </div>
             </div>
 
-            {/* Project Details Panel */}
-            <div className="mt-4 lg:mt-8 flex flex-col gap-2.5 sm:gap-3 text-xs sm:text-sm font-sans text-white/80 bg-black/40 p-4 sm:p-5 md:p-6 rounded-[20px] sm:rounded-[24px] border border-white/10 backdrop-blur-md shadow-inner overflow-y-auto scrollbar-hide pointer-events-auto">
+            {/* Project Details Panel - Hidden on mobile to maximize media space */}
+            <div className="hidden sm:flex mt-4 lg:mt-8 flex flex-col gap-2.5 sm:gap-3 text-xs sm:text-sm font-sans text-white/80 bg-black/40 p-4 sm:p-5 md:p-6 rounded-[20px] sm:rounded-[24px] border border-white/10 backdrop-blur-md shadow-inner overflow-y-auto scrollbar-hide pointer-events-auto">
                <div className="grid grid-cols-2 gap-4">
                  <div><span className="text-sci-teal uppercase text-[9px] sm:text-[10px] tracking-widest block mb-0.5 sm:mb-1">Role</span> <span className="font-light">{project.role}</span></div>
                  <div><span className="text-sci-teal uppercase text-[9px] sm:text-[10px] tracking-widest block mb-0.5 sm:mb-1">Tools</span> <span className="font-light">{project.tools}</span></div>
@@ -297,8 +297,8 @@ const Card = ({ project, i, progress, range, targetScale }) => {
             </div>
           </div>
 
-          {/* Right Column: Carousel - Using aspect-video wrapper */}
-          <div className="relative z-30 flex-1 flex w-full aspect-[4/3] lg:aspect-video overflow-hidden pointer-events-auto">
+          {/* Right Column: Carousel - Responsive aspect ratio */}
+          <div className="relative z-30 flex-1 flex w-full aspect-[4/5] sm:aspect-[4/3] lg:aspect-video overflow-hidden pointer-events-auto">
             <MediaCarousel items={project.items} projectId={project.id} />
           </div>
 
