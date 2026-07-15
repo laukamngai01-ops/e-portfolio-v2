@@ -1,12 +1,19 @@
 import Magnet from './ui/Magnet'
 import { motion, useScroll, useTransform } from 'framer-motion'
 
+const getAssetUrl = (path) => {
+  if (!path) return ''
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path
+  return `${import.meta.env.BASE_URL}${cleanPath}`
+}
+
 const NAV_LINKS = [
   { href: '#hero',     label: 'HOME' },
   { href: '#skills',   label: 'SKILLS' },
   { href: '#projects', label: 'WORK' },
   { href: '#about',    label: 'ABOUT' },
   { href: '#contact',  label: 'CONTACT' },
+  { href: '/resume.pdf', label: 'RESUME' },
 ]
 
 export default function Navbar() {
@@ -18,12 +25,10 @@ export default function Navbar() {
   )
 
   const handleNavClick = (e, href) => {
-    e.preventDefault()
-    if (href === '#resume') {
-      // For now, open a placeholder or alert since we don't have the PDF yet
-      alert('Resume download will be available soon.');
-      return;
+    if (href.endsWith('.pdf')) {
+      return; // Allow default navigation/download for PDF
     }
+    e.preventDefault()
     const el = document.querySelector(href)
     if (el) el.scrollIntoView({ behavior: 'smooth' })
   }
@@ -65,7 +70,10 @@ export default function Navbar() {
           {NAV_LINKS.map((link) => (
             <Magnet padding={20} key={link.href}>
               <a
-                href={link.href}
+                href={link.href.endsWith('.pdf') ? getAssetUrl(link.href) : link.href}
+                download={link.href.endsWith('.pdf') ? "resume.pdf" : undefined}
+                target={link.href.endsWith('.pdf') ? "_blank" : undefined}
+                rel="noopener noreferrer"
                 className="group relative font-sans font-medium tracking-[0.15em] text-[10px] md:text-xs text-titanium/70 hover:text-sci-teal transition-all duration-300 interactive block px-1"
                 onClick={(e) => handleNavClick(e, link.href)}
               >

@@ -70,7 +70,7 @@ export default function Hero() {
         <video 
           autoPlay 
           loop 
-          muted 
+          muted={true}
           playsInline
           className="w-full h-full object-cover mix-blend-screen opacity-30 grayscale blur-[4px]"
           src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4" 
@@ -86,7 +86,7 @@ export default function Hero() {
         <video 
           autoPlay 
           loop 
-          muted 
+          muted={true}
           playsInline
           className="w-full h-full object-cover mix-blend-screen opacity-100 saturate-150"
           src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4" 
@@ -127,10 +127,20 @@ export default function Hero() {
       {/* Bottom Bar / CTA */}
       <div className="absolute bottom-10 sm:bottom-16 z-30 w-full flex justify-center">
         <FadeIn delay={1.2} y={20}>
-          <div className="pointer-events-auto">
+          <div className="pointer-events-auto flex flex-col sm:flex-row gap-4">
             <ContactButton 
               onClick={() => document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })} 
               label="VIEW WORK"
+            />
+            <ContactButton 
+              onClick={() => {
+                const link = document.createElement('a');
+                link.href = `${import.meta.env.BASE_URL}resume.pdf`;
+                link.download = 'resume.pdf';
+                link.target = '_blank';
+                link.click();
+              }} 
+              label="DOWNLOAD RESUME"
             />
           </div>
         </FadeIn>

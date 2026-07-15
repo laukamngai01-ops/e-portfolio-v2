@@ -44,9 +44,22 @@ export default function Contact() {
         </FadeIn>
 
         <FadeIn delay={0.4} y={20}>
-          <a href="mailto:hello@example.com">
-            <ContactButton label="START A CONVERSATION" className="px-10 py-5 sm:px-12 sm:py-6" />
-          </a>
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
+            <a href="mailto:hello@example.com">
+              <ContactButton label="START A CONVERSATION" className="px-10 py-5 sm:px-12 sm:py-6" />
+            </a>
+            <ContactButton 
+              onClick={() => {
+                const link = document.createElement('a');
+                link.href = `${import.meta.env.BASE_URL}resume.pdf`;
+                link.download = 'resume.pdf';
+                link.target = '_blank';
+                link.click();
+              }} 
+              label="DOWNLOAD RESUME"
+              className="px-10 py-5 sm:px-12 sm:py-6"
+            />
+          </div>
         </FadeIn>
 
         <div className="w-full h-px bg-border my-16 sm:my-20" />

@@ -125,7 +125,7 @@ const MediaCarousel = ({ items, projectId }) => {
                     poster={getAssetUrl(item.poster)}
                     autoPlay={true}
                     loop
-                    muted
+                    muted={true}
                     playsInline
                     preload="auto"
                     className="w-full h-full object-contain"
@@ -155,7 +155,7 @@ const MediaCarousel = ({ items, projectId }) => {
                     src={Math.abs(offset) <= 1 ? getAssetUrl(item.src) : undefined}
                     poster={getAssetUrl(item.poster)}
                     loop
-                    muted
+                    muted={true}
                     playsInline
                     preload="none"
                     className="w-full h-full object-contain"

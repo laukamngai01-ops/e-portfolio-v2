@@ -36,7 +36,7 @@ const LazyVideo = ({ src, poster, className }) => {
           poster={poster}
           className={className}
           autoPlay 
-          muted 
+          muted={true}
           loop 
           playsInline
         />
@@ -95,7 +95,10 @@ export default function ProjectDetail() {
                src={getAssetUrl(project.items[0].src)} 
                poster={getAssetUrl(project.items[0].poster)}
                className="w-full h-full object-cover opacity-40 blur-sm scale-105"
-               autoPlay muted loop playsInline
+               autoPlay 
+               muted={true}
+               loop 
+               playsInline
              />
           ) : (
             <img 
