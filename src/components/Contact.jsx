@@ -1,80 +1,68 @@
-import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import FadeIn from './ui/FadeIn'
-import ContactButton from './ui/ContactButton'
-
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
+import { assetUrl, contact, getAsset } from "../data/portfolio";
 export default function Contact() {
-  const containerRef = useRef(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end end"]
-  })
-
-  // Paralax background effect
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"])
-
+  const { t } = useLanguage();
+  const [copyState, setCopyState] = useState("idle");
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(contact.email);
+      setCopyState("copied");
+    } catch {
+      setCopyState("failed");
+    }
+  };
   return (
-    <section 
-      id="contact" 
-      ref={containerRef}
-      className="relative w-full bg-[#0a0a0a] flex flex-col items-center justify-center px-5 sm:px-8 md:px-10 py-32 sm:py-40 overflow-hidden" 
-      data-inspector-label="Contact Section"
-    >
-      {/* Background Graphic/Gradients */}
-      <motion.div 
-        style={{ y: bgY }}
-        className="absolute inset-0 z-0 opacity-40 pointer-events-none mix-blend-screen"
-      >
-        <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-sci-teal/10 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 left-0 w-[40vw] h-[40vw] bg-sci-teal/5 rounded-full blur-[100px] -translate-x-1/3 translate-y-1/3" />
-      </motion.div>
-
-      <div className="z-10 flex flex-col items-center w-full max-w-4xl mx-auto">
-        <FadeIn delay={0} y={40} className="w-full text-center mb-8">
-          <h2 className="font-display font-normal uppercase leading-none text-[clamp(2.5rem,8vw,100px)] text-sci-teal drop-shadow-lg">
-            Let's create something<br />
-            <span className="text-titanium">extraordinary.</span>
-          </h2>
-        </FadeIn>
-
-        <FadeIn delay={0.2} y={20} className="w-full text-center mb-16">
-          <p className="font-sans font-light text-muted-cyan text-[clamp(1rem,1.5vw,1.25rem)] max-w-[600px] mx-auto">
-            Available for full-time roles, creative opportunities, or a virtual coffee chat.
-          </p>
-        </FadeIn>
-
-        <FadeIn delay={0.4} y={20}>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-            <a href="mailto:hello@example.com">
-              <ContactButton label="START A CONVERSATION" className="px-10 py-5 sm:px-12 sm:py-6" />
-            </a>
-            <ContactButton 
-              onClick={() => {
-                const link = document.createElement('a');
-                link.href = `${import.meta.env.BASE_URL}resume.pdf`;
-                link.download = 'resume.pdf';
-                link.target = '_blank';
-                link.click();
-              }} 
-              label="DOWNLOAD RESUME"
-              className="px-10 py-5 sm:px-12 sm:py-6"
-            />
+    <footer id="contact" className="contact-section">
+      <div className="shell">
+        <div className="section-label">
+          <span>04 / {t("CONTACT", "聯絡")}</span>
+          <span>
+            {t("Creative roles & collaborations", "創意職位與合作機會")}
+          </span>
+        </div>
+        <div
+          className="contact-heading"
+        >
+          <h2>{t("Let's make\nthe next frame.", "一起完成，\n下一個畫面。")}</h2>
+          <p className="contact-signature"><strong>Kam Ngai Lau</strong><span>{t("Filmmaking & AI image-making / Hong Kong", "影片製作與 AI 影像創作／香港")}</span><span>{t("For a role, an interview or a creative collaboration.", "歡迎洽談職位、面試或創作合作。")}</span></p>
+        </div>
+        <div className="contact-bottom">
+          <div className="email-group">
+            <a href={"mailto:" + contact.email} data-track="contact_email_clicked">{contact.email} ↗</a>
+            <button
+              type="button"
+              className="copy-email"
+              onClick={copyEmail}
+              aria-label={t("Copy email address", "複製電郵地址")}
+            >
+              {copyState === "copied" ? "✓" : "⧉"}
+            </button>
+            <span className="copy-status" role="status">
+              {copyState === "copied"
+                ? t("Email copied", "已複製電郵")
+                : copyState === "failed"
+                  ? t("Please select and copy the email.", "請選取並複製電郵。")
+                  : ""}
+            </span>
           </div>
-        </FadeIn>
-
-        <div className="w-full h-px bg-border my-16 sm:my-20" />
-
-        <FadeIn delay={0.5} y={10} className="w-full flex flex-col sm:flex-row items-center justify-between gap-6 text-titanium/50 text-xs sm:text-sm font-sans tracking-widest uppercase">
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-sci-teal transition-colors">LinkedIn</a>
-            <a href="#" className="hover:text-sci-teal transition-colors">Instagram</a>
-            <a href="#" className="hover:text-sci-teal transition-colors">Behance</a>
-          </div>
-          <div>
-            © {new Date().getFullYear()} Kam Ngai Lau
-          </div>
-        </FadeIn>
+          <a
+            className="footer-resume"
+            href={assetUrl(getAsset(contact.resume).src)}
+            download="Kam-Ngai-Lau-Resume.pdf"
+            target="_blank"
+            rel="noreferrer"
+          >
+            {t("Download résumé", "下載履歷")} ↗
+          </a>
+        </div>
+        <div className="footer-meta">
+          <span>© {new Date().getFullYear()} KAM NGAI LAU</span>
+          <span>{t("An independent point of view.", "以自己的視角，創作。")}</span>
+          <Link to="/#hero">{t("Back to top", "返回頂部")} ↑</Link>
+        </div>
       </div>
-    </section>
-  )
+    </footer>
+  );
 }

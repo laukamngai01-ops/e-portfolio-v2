@@ -1,93 +1,71 @@
-import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import PremiumCinematicCard from './ui/PremiumCinematicCard'
-import FadeIn from './ui/FadeIn'
-
-const PROCESS_STEPS = [
-  {
-    num: '01',
-    title: 'Research',
-    desc: 'Analyzing market trends, establishing visual references, and determining technical feasibility.'
-  },
-  {
-    num: '02',
-    title: 'Concept',
-    desc: 'Developing the core narrative, creative brief, and overarching aesthetic language.'
-  },
-  {
-    num: '03',
-    title: 'Storyboard',
-    desc: 'Visualizing the narrative sequence and mapping out the user or viewer journey.'
-  },
-  {
-    num: '04',
-    title: 'Production',
-    desc: 'Executing the vision through 3D modeling, filming, coding, and dynamic motion design.'
-  },
-  {
-    num: '05',
-    title: 'Post Production',
-    desc: 'Refining details through editing, VFX integration, and precise color grading.'
-  },
-  {
-    num: '06',
-    title: 'Delivery',
-    desc: 'Final optimization, rendering, and handoff for the target platforms or mediums.'
-  }
-]
-
+import { useLanguage } from "../context/LanguageContext";
+const experience = [
+  [
+    "2025–2026",
+    ["Content Designer / Videographer", "內容設計師／影片製作"],
+    "DC Ballet",
+    [
+      "Social campaigns, promotional films and motion graphics with artistic teams.",
+      "與藝術團隊合作，製作社群宣傳、推廣影片與動態視覺。",
+    ],
+  ],
+  [
+    "2022–2025",
+    ["Construction Worker", "建築工人"],
+    ["Infrastructure support", "基建支撐工程"],
+    [
+      "Steel support structures, site coordination and safety checks.",
+      "鋼製支撐結構施工、現場協調與安全檢查。",
+    ],
+  ],
+  [
+    "2021",
+    ["Cook", "廚師"],
+    "Beans Group",
+    [
+      "Food preparation and quality control in a busy kitchen.",
+      "在繁忙廚房負責備料、烹調及品質管理。",
+    ],
+  ],
+  [
+    "2018–2021",
+    ["Restaurant Runner", "餐廳傳菜員"],
+    ["Fine dining", "精緻餐飲"],
+    [
+      "Detail-focused service and clear communication under pressure.",
+      "注重細節的服務，以及高壓環境下的溝通協作。",
+    ],
+  ],
+];
 export default function Process() {
-  const containerRef = useRef(null)
-
+  const { t } = useLanguage();
   return (
-    <section 
-      id="process" 
-      ref={containerRef}
-      className="w-full bg-[#050505] px-5 sm:px-8 md:px-12 py-24 sm:py-32 relative z-20 border-t border-white/5"
-      data-inspector-label="Process Section"
-    >
-      <div className="max-w-7xl mx-auto">
-        <FadeIn delay={0} y={40} className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <h2 className="font-display font-normal uppercase text-[clamp(2.5rem,5vw,70px)] leading-none text-titanium drop-shadow-lg tracking-tight">
-              Creative Process
-            </h2>
-            <p className="font-sans text-white/50 mt-6 max-w-xl tracking-wide leading-relaxed">
-              A structured, highly iterative approach from initial concept to final delivery, ensuring premium quality and consistent results.
-            </p>
-          </div>
-        </FadeIn>
-
-        {/* Staggered Masonry-Style Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 relative">
-          {PROCESS_STEPS.map((step, i) => (
-            <FadeIn 
-              key={step.num} 
-              delay={i * 0.15} 
-              className={`flex w-full ${i % 2 === 1 ? 'md:mt-16 lg:mt-24' : ''}`}
-            >
-              <PremiumCinematicCard className="h-full min-h-[280px]">
-                {/* Large Background Number */}
-                <div className="absolute -right-4 -bottom-8 text-white/[0.02] font-display text-[12rem] sm:text-[15rem] leading-none pointer-events-none select-none z-0">
-                  {step.num}
-                </div>
-                
-                <div className="relative z-10 flex flex-col h-full">
-                  <div className="text-white/30 font-sans text-sm tracking-widest font-bold mb-4">
-                    PHASE {step.num}
-                  </div>
-                  <h3 className="font-display text-titanium uppercase text-2xl sm:text-3xl md:text-4xl mb-4 tracking-wide">
-                    {step.title}
-                  </h3>
-                  <p className="font-sans text-sm sm:text-base text-white/50 leading-relaxed max-w-[90%] mt-auto">
-                    {step.desc}
-                  </p>
-                </div>
-              </PremiumCinematicCard>
-            </FadeIn>
-          ))}
-        </div>
+    <section className="experience-section shell">
+      <div className="experience-heading">
+        <h2>{t("An unexpected path.", "不一樣的來路。")}</h2>
+        <p>{t("Experience that shapes how I work.", "不同的經歷，塑造今天的工作方式。")}</p>
+      </div>
+      <div className="experience-list">
+        {experience.slice(0, 1).map(([date, role, company, description]) => (
+          <article className="experience-row" key={date}>
+            <span className="small-label">{date}</span>
+            <div>
+              <h3>{t(role)}</h3>
+              <p>{Array.isArray(company) ? t(company) : company}</p>
+            </div>
+            <p>{t(description)}</p>
+          </article>
+        ))}
+        <details className="earlier-experience">
+          <summary><span>{t("Earlier experience", "更早的工作經歷")} <small>2018–2025</small></span><span className="skill-plus" aria-hidden="true">+</span></summary>
+          <p className="experience-context">{t("Before visual media: construction and hospitality. A foundation in practical work, teamwork and delivery.", "投入影像工作以前，我曾從事建築與餐飲工作。這些經歷是我實作、協作與交付習慣的起點。")}</p>
+          {experience.slice(1).map(([date, role, company, description]) => <article className="experience-row" key={date}>
+            <span className="small-label">{date}</span>
+            <div><h3>{t(role)}</h3><p>{Array.isArray(company) ? t(company) : company}</p></div>
+            <p>{t(description)}</p>
+          </article>)}
+        </details>
       </div>
     </section>
-  )
+  );
 }

@@ -1,154 +1,91 @@
-import { useRef, useEffect } from 'react'
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
-import FadeIn from './ui/FadeIn'
-import ContactButton from './ui/ContactButton'
-import WordsPullUp from './ui/WordsPullUp'
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { useReducedMotion } from "framer-motion";
+import { useLanguage } from "../context/LanguageContext";
+import { assetUrl, contact, getAsset, imageUrl } from "../data/portfolio";
+import AssetImage from "./AssetImage";
+
+const scenes = [
+  { id: "ppp-lemon/ensemble", project: "ppp-lemon", label: ["Imagined worlds", "想像成真"], title: "PPP LEMON", detail: ["Brand films · Solo production", "品牌影片 · 獨立製作"] },
+  { id: "videography/photo_v2_4", project: "videography", label: ["Moving images", "流動影像"], title: "DC BALLET", detail: ["Film · Shooting & editing", "影片 · 拍攝與剪輯"] },
+  { id: "photography/photo_set_008", project: "photography", label: ["Quiet moments", "細看日常"], title: "BETWEEN MOMENTS", detail: ["Photography · Live performance", "攝影 · 現場演出"] },
+];
+
+function FilmPreview({ asset }) {
+  const { t } = useLanguage();
+  const reduced = useReducedMotion();
+  const video = useRef(null);
+  const manuallyPaused = useRef(false);
+  const [playing, setPlaying] = useState(false);
+  const [failed, setFailed] = useState(false);
+  useEffect(() => {
+    const element = video.current;
+    if (!element || failed) return;
+    if (reduced) { element.pause(); return; }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) element.pause();
+      else if (!manuallyPaused.current) element.play().catch(() => {});
+    }, { threshold: 0.2 });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [reduced, failed]);
+  if (failed) return <AssetImage id={asset.id} alt={t("Ballet film still", "芭蕾舞影片截圖")} eager />;
+  return <>
+    <video ref={video} src={assetUrl(asset.variants.preview.src)} poster={imageUrl(asset.id)} muted loop playsInline preload="metadata"
+      onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => setFailed(true)}
+      aria-label={t("Ballet film preview", "芭蕾舞影片預覽")} />
+    <button className="film-control glass-on-media" type="button" onClick={() => {
+      manuallyPaused.current = !video.current.paused;
+      if (video.current.paused) video.current.play().catch(() => {}); else video.current.pause();
+    }} aria-label={playing ? t("Pause preview", "暫停預覽") : t("Play preview", "播放預覽")}>
+      {playing ? "Ⅱ" : "▷"}
+    </button>
+  </>;
+}
 
 export default function Hero() {
-  const containerRef = useRef(null)
-  
-  // Mouse tracking for spotlight
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-  
-  // Smooth spring physics for the cursor tracking
-  const springConfig = { damping: 25, stiffness: 150, mass: 0.5 }
-  const smoothX = useSpring(mouseX, springConfig)
-  const smoothY = useSpring(mouseY, springConfig)
-  
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      mouseX.set(e.clientX)
-      mouseY.set(e.clientY)
-    }
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [mouseX, mouseY])
-
-  // Create a template string for the mask image using the motion values
-  const maskImage = useTransform(
-    [smoothX, smoothY],
-    ([x, y]) => `radial-gradient(circle 300px at ${x}px ${y}px, black 10%, transparent 80%)`
-  )
-
-  const containerVars = {
-    initial: { opacity: 0 },
-    animate: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.4 }
-    }
-  }
-
-  const itemVars = {
-    initial: { opacity: 0, y: 40 },
-    animate: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } }
-  }
-
-  // Parallax and 3D Rotation for the title based on mouse position
-  const parallaxX = useTransform(smoothX, v => {
-    const w = typeof window !== 'undefined' ? window.innerWidth : 1000
-    return ((v / w) - 0.5) * 40 // -20px to 20px offset
-  })
-  const parallaxY = useTransform(smoothY, v => {
-    const h = typeof window !== 'undefined' ? window.innerHeight : 1000
-    return ((v / h) - 0.5) * 40
-  })
-  const rotateX = useTransform(smoothY, v => {
-    const h = typeof window !== 'undefined' ? window.innerHeight : 1000
-    return ((v / h) - 0.5) * -15 // -7.5 to 7.5 deg
-  })
-  const rotateY = useTransform(smoothX, v => {
-    const w = typeof window !== 'undefined' ? window.innerWidth : 1000
-    return ((v / w) - 0.5) * 15
-  })
-
+  const { t } = useLanguage();
+  const [selected, setSelected] = useState(1);
+  const scene = scenes[selected];
   return (
-    <section ref={containerRef} id="hero" className="relative w-full h-screen flex flex-col justify-center items-center overflow-hidden bg-[#050505]" style={{ perspective: 1000 }} data-inspector-label="Hero Section">
-      
-      {/* Base Background Video (Dark, Grayscale or Blurred) */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <video 
-          autoPlay 
-          loop 
-          muted={true}
-          playsInline
-          className="w-full h-full object-cover mix-blend-screen opacity-30 grayscale blur-[4px]"
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4" 
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-[#050505]/80 to-[#050505]" />
-      </div>
-
-      {/* Spotlight Reveal Layer (Full color, sharp) */}
-      <motion.div 
-        className="absolute inset-0 z-10 pointer-events-none"
-        style={{ WebkitMaskImage: maskImage, maskImage }}
-      >
-        <video 
-          autoPlay 
-          loop 
-          muted={true}
-          playsInline
-          className="w-full h-full object-cover mix-blend-screen opacity-100 saturate-150"
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4" 
-        />
-        <div className="absolute inset-0 bg-sci-teal/10 mix-blend-color" />
-      </motion.div>
-
-      {/* Main Content Area */}
-      <div className="relative z-20 flex flex-col items-center text-center px-4 w-full mt-16 md:mt-0 pointer-events-none" style={{ transformStyle: "preserve-3d" }}>
-        <motion.div 
-          variants={containerVars}
-          initial="initial"
-          animate="animate"
-          className="w-full flex flex-col items-center"
-          style={{ transformStyle: "preserve-3d" }}
-        >
-          <motion.div 
-            style={{ x: parallaxX, y: parallaxY, rotateX, rotateY, z: 50 }}
-            className="pointer-events-auto cursor-crosshair font-display font-normal uppercase tracking-tight leading-[0.9] text-[clamp(4rem,12vw,14rem)] text-sci-teal mix-blend-plus-lighter drop-shadow-2xl origin-center"
-            whileHover={{ 
-              scale: 1.03,
-              textShadow: "0px 0px 40px rgba(0, 240, 255, 0.8), 0px 0px 80px rgba(255, 255, 255, 0.3)",
-              color: "#ffffff"
-            }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <WordsPullUp text="KAM NGAI LAU" />
-          </motion.div>
-          
-          <motion.div variants={itemVars} className="mt-6 md:mt-10 flex flex-col items-center">
-            <p className="font-sans font-light tracking-[0.2em] leading-relaxed text-[clamp(0.75rem,1.5vw,1.1rem)] max-w-[600px] text-titanium/80 uppercase">
-              AI Filmmaker <span className="text-border mx-2">|</span> <span className="font-display italic lowercase text-sci-teal tracking-normal">Multimedia Designer</span> <span className="text-border mx-2">|</span> Creative Technologist
-            </p>
-          </motion.div>
-        </motion.div>
-      </div>
-
-      {/* Bottom Bar / CTA */}
-      <div className="absolute bottom-10 sm:bottom-16 z-30 w-full flex justify-center">
-        <FadeIn delay={1.2} y={20}>
-          <div className="pointer-events-auto flex flex-col sm:flex-row gap-4">
-            <ContactButton 
-              onClick={() => document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })} 
-              label="VIEW WORK"
-            />
-            <ContactButton 
-              onClick={() => {
-                const link = document.createElement('a');
-                link.href = `${import.meta.env.BASE_URL}resume.pdf`;
-                link.download = 'resume.pdf';
-                link.target = '_blank';
-                link.click();
-              }} 
-              label="DOWNLOAD RESUME"
-            />
+    <section id="hero" className="hero shell">
+      <div className="hero-copy">
+        <p className="hero-identity"><span>{t("INDEPENDENT PERSPECTIVE", "以自己的視角，創作")}</span><span>HONG KONG / PORTFOLIO</span></p>
+        <h1 lang="en" aria-label="Kam Ngai Lau"><span className="hero-title-line"><span>Kam Ngai</span></span><span className="hero-title-line"><span>Lau<span className="name-stop" aria-hidden="true">.</span></span></span></h1>
+        <div className="hero-intro">
+          <p className="hero-discipline">{t("FILMMAKING & AI IMAGE-MAKING", "影片製作與 AI 影像創作")}</p>
+          <p className="hero-description">{t("From the first idea to the final cut. I make films, photographs and visual stories — with a camera, with AI, and with a hands-on approach.", "從第一個想法，到最後一次剪輯。以鏡頭與 AI 製作影片，結合攝影與設計，親手把訊息變成畫面。")}</p>
+          <div className="hero-actions">
+            <Link className="primary-link" to="/#projects">{t("Explore work", "瀏覽作品")} <span aria-hidden="true">↗</span></Link>
+            <a className="inline-link" href={assetUrl(getAsset(contact.resume).src)} target="_blank" rel="noreferrer" data-track="resume_opened_hero">{t("Résumé", "閱讀履歷")} <span aria-hidden="true">↗</span></a>
           </div>
-        </FadeIn>
+          <Link className="hero-contact" to="/#contact">{t("Discuss a role or a project", "洽談職位或創作合作")} <span aria-hidden="true">→</span></Link>
+        </div>
+        <div className="hero-caption"><span>{t("Real moments. New worlds.", "記錄真實。創造想像。")}</span><span>{t("FILM / PHOTOGRAPHY / DESIGN", "影片／攝影／設計")}</span></div>
       </div>
-
-      {/* Cinematic Noise Overlay (global to hero) */}
-      <div className="absolute inset-0 z-40 pointer-events-none noise-overlay opacity-30 mix-blend-overlay" />
-
+      <div className="hero-stage">
+        <div className="optical-frame">
+          <div className="hero-screen" key={scene.id}>
+            {getAsset(scene.id).type === "video" ? <FilmPreview asset={getAsset(scene.id)} /> :
+              <AssetImage id={scene.id} alt={t(scene.detail) + " / " + scene.title} eager sizes="(max-width: 599px) 92vw, 72vw" />}
+          </div>
+          <div className="hero-scene-meta" aria-live="polite">
+            <div><strong>{scene.title}</strong><p>{t(scene.detail)}</p></div>
+            <Link to={"/project/" + scene.project} className="scene-open" data-track={"project_opened_" + scene.project}
+              aria-label={t("View project: ", "查看作品：") + scene.title}>↗</Link>
+          </div>
+        </div>
+        <Link className="hero-still" to="/project/photography" data-track="project_opened_photography">
+          <AssetImage id="photography/photo_lohas_008" alt={t("A ballet dancer outdoors, photographed by Kam Ngai Lau", "Kam Ngai Lau 拍攝的戶外芭蕾舞者")} eager sizes="(max-width: 599px) 40vw, 26vw" />
+          <span><strong>{t("THE STILL FRAME", "定格的瞬間")}</strong><span aria-hidden="true">↗</span></span>
+        </Link>
+        <div className="scene-selector" role="group" aria-label={t("Choose a featured project", "選取焦點作品")}>
+          {scenes.map((item, index) => <button key={item.id} type="button" aria-label={t(item.label)} aria-pressed={selected === index} onClick={() => setSelected(index)}>
+            <AssetImage id={item.id} alt="" sizes="64px" />
+            <span>{t(item.label)}</span>
+          </button>)}
+        </div>
+      </div>
     </section>
-  )
+  );
 }

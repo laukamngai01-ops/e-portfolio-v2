@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 1,
+  "release": "2026-09-25",
+  "assets": {
+    "ppp-lemon/film-01": {
+      "id": "ppp-lemon/film-01",
+      "collection": "ppp-lemon",
+      "release": "2026-09-25",
+      "type": "video",
+      "src": "/assets/derived/ppp-lemon/2026-09-25/film-01--720p.mp4",
+      "bytes": 16597174,
+      "sha256": "4b59df1dcf5f1ba1c09ed656f7fcdb1e4a83dfc5e7bb8c0519e093057bdc9ba2",
+      "width": 1280,
+      "height": 720,
+      "duration": 62.286032,
+      "provenance": "Lossless remux of latest owner-supplied Cantonese delivery; external original unchanged",
+      "sourceSha256": "4498bd9b6b94b48149fe054878ba8105a614d0c7860d03609a48b773d2004472",
+      "rights": "Employer project supplied by portfolio owner; no reuse licence granted",
+      "variants": {
+        "webm": {
+          "src": "/assets/derived/ppp-lemon/2026-09-25/film-01--720p.webm",
+          "bytes": 17795182,
+          "sha256": "aa04a5c89dcc6fdc590d0e2c3346805d86132c572ee4a435d781792f78bbfd54"
+        },
+        "poster": {
+          "src": "/assets/derived/ppp-lemon/2026-09-25/film-01--poster.webp",
+          "bytes": 147708,
+          "sha256": "d2d3e1efe43b5bbe8cc1fec79ac19d32709153b7eae4566bec95c6dd11365e91",
+          "timeSeconds": 28
+        }
+      }
+    },
+    "ppp-lemon/film-02": {
+      "id": "ppp-lemon/film-02",
+      "collection": "ppp-lemon",
+      "release": "2026-09-25",
+      "type": "video",
+      "src": "/assets/derived/ppp-lemon/2026-09-25/film-02--720p.mp4",
+      "bytes": 8178513,
+      "sha256": "93baaa25bc757abd69e711d3c88841e5da99d7b74116f03578e3644a65c15cd6",
+      "width": 1280,
+      "height": 720,
+      "duration": 66.047664,
+      "provenance": "Lossless remux of latest owner-supplied Cantonese delivery; external original unchanged",
+      "sourceSha256": "efe85e24bbc909e161e557d1134d48a178d70e199b239028564ff850222801f9",
+      "rights": "Employer project supplied by portfolio owner; no reuse licence granted",
+      "variants": {
+        "webm": {
+          "src": "/assets/derived/ppp-lemon/2026-09-25/film-02--720p.webm",
+          "bytes": 5464602,
+          "sha256": "45dbe47c85891d5d9bf340cbc959c47b37f869af187781ed2801078d79b31ddf"
+        },
+        "poster": {
+          "src": "/assets/derived/ppp-lemon/2026-09-25/film-02--poster.webp",
+          "bytes": 66496,
+          "sha256": "0fec4e1fc7b5d0281d3d2126e0b58265bac3a295753dfc1a825116690df56b23",
+          "timeSeconds": 10
+        }
+      }
+    },
+    "ppp-lemon/film-03": {
+      "id": "ppp-lemon/film-03",
+      "collection": "ppp-lemon",
+      "release": "2026-09-25",
+      "type": "video",
+      "src": "/assets/derived/ppp-lemon/2026-09-25/film-03--720p.mp4",
+      "bytes": 9442035,
+      "sha256": "582b2004a403120be1d74c5a06e6622d20ad22fed65b962a8eaef442be455d5c",
+      "width": 1280,
+      "height": 720,
+      "duration": 49.282857,
+      "provenance": "Lossless remux of latest owner-supplied Cantonese delivery; external original unchanged",
+      "sourceSha256": "c0930ff3f99048a925ec46d8a8815a90b1a154e5b1cd13dc8365790f4fba6f85",
+      "rights": "Employer project supplied by portfolio owner; no reuse licence granted",
+      "variants": {
+        "webm": {
+          "src": "/assets/derived/ppp-lemon/2026-09-25/film-03--720p.webm",
+          "bytes": 8161519,
+          "sha256": "f3a2832e49ecff2a99fa4f713366336264a0a79d23ba04ad60a0b0bb17484005"
+        },
+        "poster": {
+          "src": "/assets/derived/ppp-lemon/2026-09-25/film-03--poster.webp",
+          "bytes": 78788,
+          "sha256": "c712f788ae2203cbb632d5eff715d224a0b6f8c4414ebbf3930ba35a215b7499",
+          "timeSeconds": 42.4
+        }
+      }
+    },
+    "ppp-lemon/film-04": {
+      "id": "ppp-lemon/film-04",
+      "collection": "ppp-lemon",
+      "release": "2026-09-25",
+      "type": "video",
+      "src": "/assets/derived/ppp-lemon/2026-09-25/film-04--720p.mp4",
+      "bytes": 7535430,
+      "sha256": "87d318bc0f9a2ef8d4f4e10acfb6bc5ddac22ef421ceeadd455381cad1468f4d",
+      "width": 1280,
+      "height": 720,
+      "duration": 47.378821,
+      "provenance": "Lossless remux of latest owner-supplied Cantonese delivery; external original unchanged",
+      "sourceSha256": "8f544219473be7634668c642606917e48dc07ae21c388cc30f234fc8909a8341",
+      "rights": "Employer project supplied by portfolio owner; no reuse licence granted",
+      "variants": {
+        "webm": {
+          "src": "/assets/derived/ppp-lemon/2026-09-25/film-04--720p.webm",
+          "bytes": 6908280,
+          "sha256": "522dc60e41a5cb15a2d0333b382b3991c93c27f8ec0d1e035de92aa4549b42a5"
+        },
+        "poster": {
+          "src": "/assets/derived/ppp-lemon/2026-09-25/film-04--poster.webp",
+          "bytes": 101562,
+          "sha256": "10e531b9e90a27f3907c0994f9227859fbf556fee2512e6101d8466f6870bf33",
+          "timeSeconds": 33
+        },
+        "preview": {
+          "src": "/assets/derived/motion-previews/2026-09-27/ppp-lemon-film-04--26s-34s.mp4",
+          "bytes": 592731,
+          "sha256": "73b23408eff64f9f3f6e165f32eb78bb3df989cc9a41c070bdbd682c328991cc",
+          "startSeconds": 26,
+          "durationSeconds": 8,
+          "audio": false,
+          "sourceSha256": "87d318bc0f9a2ef8d4f4e10acfb6bc5ddac22ef421ceeadd455381cad1468f4d",
+          "provenance": "Muted portfolio interaction preview, derived from owner-supplied film; original unchanged"
+        }
+      }
+    },
+    "ppp-lemon/ensemble": {
+      "id": "ppp-lemon/ensemble",
+      "collection": "ppp-lemon",
+      "release": "2026-09-25",
+      "type": "image",
+      "src": "/assets/derived/ppp-lemon/2026-09-25/ensemble--w1280.webp",
+      "bytes": 147708,
+      "sha256": "d2d3e1efe43b5bbe8cc1fec79ac19d32709153b7eae4566bec95c6dd11365e91",
+      "width": 1280,
+      "height": 720,
+      "provenance": "Still from latest owner-supplied film; native resolution, not a storyboard",
+      "derivedFrom": "ppp-lemon/film-01",
+      "timeSeconds": 28,
+      "rights": "Employer project supplied by portfolio owner; no reuse licence granted",
+      "variants": {
+        "w960": {
+          "src": "/assets/derived/ppp-lemon/2026-09-25/ensemble--w960.webp",
+          "bytes": 106538,
+          "sha256": "a8e9ffa919cd84049d14b2b24175e6062df6fa6fea42f59ee1dd71663fbdc51e"
+        },
+        "w1280": {
+          "src": "/assets/derived/ppp-lemon/2026-09-25/ensemble--w1280.webp",
+          "bytes": 147708,
+          "sha256": "d2d3e1efe43b5bbe8cc1fec79ac19d32709153b7eae4566bec95c6dd11365e91"
+        }
+      }
+    },
+    "ppp-lemon/blind-taste": {
+      "id": "ppp-lemon/blind-taste",
+      "collection": "ppp-lemon",
+      "release": "2026-09-25",
+      "type": "image",
+      "src": "/assets/derived/ppp-lemon/2026-09-25/blind-taste--w1280.webp",
+      "bytes": 66496,
+      "sha256": "0fec4e1fc7b5d0281d3d2126e0b58265bac3a295753dfc1a825116690df56b23",
+      "width": 1280,
+      "height": 720,
+      "provenance": "Still from latest owner-supplied film; native resolution, not a storyboard",
+      "derivedFrom": "ppp-lemon/film-02",
+      "timeSeconds": 10,
+      "rights": "Employer project supplied by portfolio owner; no reuse licence granted",
+      "variants": {
+        "w960": {
+          "src": "/assets/derived/ppp-lemon/2026-09-25/blind-taste--w960.webp",
+          "bytes": 47920,
+          "sha256": "458fa2da661dfbb5a1fd99256b63e9ad2eef2fd97f59f3a1b42ab2221511b5a2"
+        },
+        "w1280": {
+          "src": "/assets/derived/ppp-lemon/2026-09-25/blind-taste--w1280.webp",
+          "bytes": 66496,
+          "sha256": "0fec4e1fc7b5d0281d3d2126e0b58265bac3a295753dfc1a825116690df56b23"
+        }
+      }
+    },
+    "ppp-lemon/enzyme": {
+      "id": "ppp-lemon/enzyme",
+      "collection": "ppp-lemon",
+      "release": "2026-09-25",
+      "type": "image",
+      "src": "/assets/derived/ppp-lemon/2026-09-25/enzyme--w1280.webp",
+      "bytes": 78788,
+      "sha256": "c712f788ae2203cbb632d5eff715d224a0b6f8c4414ebbf3930ba35a215b7499",
+      "width": 1280,
+      "height": 720,
+      "provenance": "Still from latest owner-supplied film; native resolution, not a storyboard",
+      "derivedFrom": "ppp-lemon/film-03",
+      "timeSeconds": 42.4,
+      "rights": "Employer project supplied by portfolio owner; no reuse licence granted",
+      "variants": {
+        "w960": {
+          "src": "/assets/derived/ppp-lemon/2026-09-25/enzyme--w960.webp",
+          "bytes": 58292,
+          "sha256": "1641b8cbaafbc207d372b261eb4930549f6b1265bb6429aacec67bd6116cdab2"
+        },
+        "w1280": {
+          "src": "/assets/derived/ppp-lemon/2026-09-25/enzyme--w1280.webp",
+          "bytes": 78788,
+          "sha256": "c712f788ae2203cbb632d5eff715d224a0b6f8c4414ebbf3930ba35a215b7499"
+        }
+      }
+    },
+    "ppp-lemon/terrace": {
+      "id": "ppp-lemon/terrace",
+      "collection": "ppp-lemon",
+      "release": "2026-09-25",
+      "type": "image",
+      "src": "/assets/derived/ppp-lemon/2026-09-25/terrace--w1280.webp",
+      "bytes": 101562,
+      "sha256": "10e531b9e90a27f3907c0994f9227859fbf556fee2512e6101d8466f6870bf33",
+      "width": 1280,
+      "height": 720,
+      "provenance": "Still from latest owner-supplied film; native resolution, not a storyboard",
+      "derivedFrom": "ppp-lemon/film-04",
+      "timeSeconds": 33,
+      "rights": "Employer project supplied by portfolio owner; no reuse licence granted",
+      "variants": {
+        "w960": {
+          "src": "/assets/derived/ppp-lemon/2026-09-25/terrace--w960.webp",
+          "bytes": 74966,
+          "sha256": "6bbfc2429e049a9b4ab184fafc3ede396d13425ab0d9b38a8e64383238cb65a3"
+        },
+        "w1280": {
+          "src": "/assets/derived/ppp-lemon/2026-09-25/terrace--w1280.webp",
+          "bytes": 101562,
+          "sha256": "10e531b9e90a27f3907c0994f9227859fbf556fee2512e6101d8466f6870bf33"
+        }
+      }
+    }
+  }
+}

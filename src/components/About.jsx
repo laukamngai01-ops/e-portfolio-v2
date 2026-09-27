@@ -1,48 +1,59 @@
-import FadeIn from './ui/FadeIn'
-import WordsPullUp from './ui/WordsPullUp'
-
+import { useLanguage } from "../context/LanguageContext";
+import { assetUrl, contact, getAsset } from "../data/portfolio";
+import AssetImage from "./AssetImage";
 export default function About() {
+  const { t } = useLanguage();
   return (
-    <section id="about" className="relative w-full min-h-screen bg-[#0a0a0a] flex flex-col items-center justify-center px-5 sm:px-8 md:px-10 py-20 overflow-hidden" data-inspector-label="About Section">
-      
-      {/* 3D Decorative Corners */}
-      <FadeIn delay={0.1} duration={0.9} x={-80} y={0} className="absolute top-[4%] left-[1%] sm:left-[2%] md:left-[4%] pointer-events-none">
-        <img src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png" alt="3D Moon" className="w-[120px] sm:w-[160px] md:w-[210px] opacity-70" />
-      </FadeIn>
-      <FadeIn delay={0.25} duration={0.9} x={-80} y={0} className="absolute bottom-[8%] left-[3%] sm:left-[6%] md:left-[10%] pointer-events-none">
-        <img src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png" alt="3D Shape" className="w-[100px] sm:w-[140px] md:w-[180px] opacity-70" />
-      </FadeIn>
-      <FadeIn delay={0.15} duration={0.9} x={80} y={0} className="absolute top-[4%] right-[1%] sm:right-[2%] md:right-[4%] pointer-events-none">
-        <img src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png" alt="3D Lego" className="w-[120px] sm:w-[160px] md:w-[210px] opacity-70" />
-      </FadeIn>
-      <FadeIn delay={0.3} duration={0.9} x={80} y={0} className="absolute bottom-[8%] right-[3%] sm:right-[6%] md:right-[10%] pointer-events-none">
-        <img src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png" alt="3D Group" className="w-[130px] sm:w-[170px] md:w-[220px] opacity-70" />
-      </FadeIn>
-
-      <div className="z-10 flex flex-col items-center">
-        <FadeIn delay={0} y={40} className="w-full text-center">
-          <h2 className="font-display text-sci-teal font-normal uppercase leading-none tracking-tight text-[clamp(3rem,12vw,160px)] mix-blend-plus-lighter drop-shadow-2xl">
-            <WordsPullUp text="About me" />
-          </h2>
-        </FadeIn>
-
-        <div className="mt-10 sm:mt-14 md:mt-16 text-center text-muted-cyan font-medium leading-relaxed max-w-[700px] text-[clamp(1rem,2vw,1.35rem)]">
-          <FadeIn delay={0.2} y={20}>
-            <p className="font-sans font-light mb-10">
-              Kam Ngai Lau is an AI Filmmaker, Multimedia Designer, and Creative Technologist. Focused on combining visual storytelling with cutting-edge AI technology, managing all stages of production from concept to final delivery. Strong foundation in spatial design, motion, and creative coding.
+    <section id="about" className="about-section">
+      <div className="shell">
+        <p className="editorial-marker"><span>02 / {t("THE PERSON BEHIND THE FRAME", "畫面背後的創作者")}</span><span>KAM NGAI LAU</span></p>
+        <div className="about-grid">
+          <div className="about-title">
+            <h2>
+              {t(
+                "An eye for detail.\nA mind for making.",
+                "細看每一刻。\n親手成就想法。",
+              )}
+            </h2>
+            <figure className="about-photo">
+              <AssetImage id="photography/photo_set_008" alt={t("A moment between performances, photographed by Kam Ngai Lau", "Kam Ngai Lau 拍攝的演出間歇片刻")} sizes="(max-width: 760px) 90vw, 42vw" />
+              <figcaption>{t("Between performances. A photograph from my archive.", "演出之間。來自我的攝影紀錄。")}</figcaption>
+            </figure>
+          </div>
+          <div className="about-story">
+            <p className="about-lead">
+              {t(
+                "A brief becomes a film. I take it all the way.",
+                "從一份要求，做到一部完整影片。",
+              )}
             </p>
-          </FadeIn>
-          <FadeIn delay={0.3} y={20}>
-            <a 
-              href="#" 
-              onClick={(e) => { e.preventDefault(); alert('Resume PDF will be placed here.'); }}
-              className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-sci-teal/10 hover:bg-sci-teal/20 border border-sci-teal/30 text-sci-teal font-sans tracking-widest text-xs sm:text-sm uppercase transition-all duration-300"
+            <p>
+              {t(
+                "For PPP LEMON, my employer supplied the required copy and product talking points. I handled the creative production independently, from the script and characters to AI generation and the final edit.",
+                "在 PPP LEMON 項目中，老闆提供必須出現的文字及產品說明重點；其餘創作製作由我獨立完成，包括劇本、角色、AI 生成與最終剪輯。",
+              )}
+            </p>
+            <dl className="practice-notes">
+              <div><dt>{t("START WITH", "由此開始")}</dt><dd>{t("The message the film needs to communicate", "影片需要傳達的訊息")}</dd></div>
+              <div><dt>{t("WORK THROUGH", "親手完成")}</dt><dd>{t("Story, image-making and the edit", "敘事、影像製作與剪輯")}</dd></div>
+            </dl>
+            <p>
+              {t(
+                "Before working in visual media, I built steel support structures on construction sites. That experience still shapes how I work: plan carefully, communicate clearly, and follow through.",
+                "投入視覺創作以前，我曾在建築工地搭建鋼製支撐結構。那段經驗讓我習慣周詳規劃、清楚溝通，並對交付負責。",
+              )}
+            </p>
+            <a
+              className="inline-link"
+              href={assetUrl(getAsset(contact.resume).src)}
+              target="_blank"
+              rel="noreferrer"
             >
-              DOWNLOAD RESUME
+              {t("Read my résumé", "閱讀我的履歷")} ↗
             </a>
-          </FadeIn>
+          </div>
         </div>
       </div>
     </section>
-  )
+  );
 }

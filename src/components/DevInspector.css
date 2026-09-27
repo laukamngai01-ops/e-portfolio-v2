@@ -31,7 +31,11 @@
   box-shadow:
     0 0 0 1px rgba(8, 10, 11, 0.7),
     inset 0 0 0 1px rgba(201, 255, 54, 0.22);
-  transition: top 80ms linear, left 80ms linear, width 80ms linear, height 80ms linear;
+  transition:
+    top 80ms linear,
+    left 80ms linear,
+    width 80ms linear,
+    height 80ms linear;
 }
 
 .dev-inspector__outline.is-selected {

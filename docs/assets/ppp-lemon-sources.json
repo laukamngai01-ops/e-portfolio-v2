@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "release": "2026-09-25",
+  "sourceRootLabel": "Latest owner delivery (external archive; not deployed)",
+  "originals": [
+    {
+      "id": "film-01",
+      "relativePath": "【神奇檸檬多酚與酵素_ 什麽是多酚？】.mp4",
+      "bytes": 16566056,
+      "sha256": "4498bd9b6b94b48149fe054878ba8105a614d0c7860d03609a48b773d2004472",
+      "width": 1280,
+      "height": 720,
+      "duration": 62.286032
+    },
+    {
+      "id": "film-02",
+      "relativePath": "【檸檬多酚無糖潤喉糖加埋海葡萄無糖製造？】.mp4",
+      "bytes": 8147823,
+      "sha256": "efe85e24bbc909e161e557d1134d48a178d70e199b239028564ff850222801f9",
+      "width": 1280,
+      "height": 720,
+      "duration": 66.047664
+    },
+    {
+      "id": "film-03",
+      "relativePath": "【海葡萄修復精華 × 酵素之霸】.mp4",
+      "bytes": 9419077,
+      "sha256": "c0930ff3f99048a925ec46d8a8815a90b1a154e5b1cd13dc8365790f4fba6f85",
+      "width": 1280,
+      "height": 720,
+      "duration": 49.282857
+    },
+    {
+      "id": "film-04",
+      "relativePath": "【關節保養點樣揀？純素無糖＋補鈣｜多酚葡萄糖胺】.mp4",
+      "bytes": 7513078,
+      "sha256": "8f544219473be7634668c642606917e48dc07ae21c388cc30f234fc8909a8341",
+      "width": 1280,
+      "height": 720,
+      "duration": 47.378821
+    }
+  ],
+  "recipe": {
+    "video": "H.264/AAC stream copy; faststart; metadata removed; no image or audio re-encoding",
+    "alternative": "VP9 CRF 32 / cpu-used 4 / row-mt / yuv420p; Opus 96k; native 1280x720",
+    "images": "WebP quality 86; 960px and 1280px; no upscaling or retouching"
+  },
+  "stills": [
+    {
+      "id": "ensemble",
+      "source": "film-01",
+      "time": 28
+    },
+    {
+      "id": "blind-taste",
+      "source": "film-02",
+      "time": 10
+    },
+    {
+      "id": "enzyme",
+      "source": "film-03",
+      "time": 42.4
+    },
+    {
+      "id": "terrace",
+      "source": "film-04",
+      "time": 33
+    }
+  ]
+}

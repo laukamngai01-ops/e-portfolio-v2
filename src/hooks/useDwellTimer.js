@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { useInView } from 'framer-motion';
-import { analytics } from '../utils/analytics';
+import { useEffect, useRef } from "react";
+import { useInView } from "framer-motion";
+import { analytics } from "../utils/analytics";
 
 export function useDwellTimer(sectionName, customRef = null) {
   const internalRef = useRef(null);

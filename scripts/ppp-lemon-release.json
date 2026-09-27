@@ -1,0 +1,15 @@
+{
+  "version": "2026-09-25",
+  "sources": [
+    { "id": "film-01", "relative": "【神奇檸檬多酚與酵素_ 什麽是多酚？】.mp4", "poster": 28 },
+    { "id": "film-02", "relative": "【檸檬多酚無糖潤喉糖加埋海葡萄無糖製造？】.mp4", "poster": 10 },
+    { "id": "film-03", "relative": "【海葡萄修復精華 × 酵素之霸】.mp4", "poster": 42.4 },
+    { "id": "film-04", "relative": "【關節保養點樣揀？純素無糖＋補鈣｜多酚葡萄糖胺】.mp4", "poster": 33 }
+  ],
+  "stills": [
+    { "id": "ensemble", "source": "film-01", "time": 28 },
+    { "id": "blind-taste", "source": "film-02", "time": 10 },
+    { "id": "enzyme", "source": "film-03", "time": 42.4 },
+    { "id": "terrace", "source": "film-04", "time": 33 }
+  ]
+}

@@ -7,13 +7,17 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "assets:build": "node scripts/assets.mjs",
+    "assets:previews": "node scripts/build-motion-previews.mjs",
+    "assets:check": "node scripts/assets.mjs --check"
   },
   "dependencies": {
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource/barlow-condensed": "^5.3.0",
     "@tailwindcss/vite": "^4.3.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.40.0",
-    "lucide-react": "^1.21.0",
     "posthog-js": "^1.399.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
